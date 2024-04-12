@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:04:04 by mito              #+#    #+#             */
-/*   Updated: 2024/04/04 15:34:10 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/12 10:21:51 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 	int fd_out;
 	
 	if (argc != 5)
-		return (0); //odify the return value according to the subject
+		return (0); //modify the return value according to the subject
 	
 	fd_in = open(argv[1], O_RDONLY);
 }
