@@ -5,8 +5,19 @@ LIBFT	= ./libft/libft.a
 
 #SRCS	= main.c
 
-BONUS	= main_bonus.c get_path.c init_pipex.c create_pipes.c clean_up.c call_execve.c start_process.c \
-		first_child_process.c last_child_process.c
+BONUS	=	main_bonus.c \
+			get_path.c \
+			init_pipex.c \
+			create_pipes.c \
+			clean_up.c \
+			call_execve.c \
+			start_process.c \
+			ft_join_strings.c \
+			first_child_process.c \
+			last_child_process.c \
+			middle_child_process.c \
+			close_pipes.c \
+			wait_processes.c
 
 #OBJS	= $(SRCS:.c=.o)
 
@@ -14,7 +25,7 @@ BONUS_OBJS	= $(BONUS:.c=.o)
 
 CC	= cc
 
-CFLAGS = -Wall -Wextra -Werror -I/libft
+CFLAGS = -g -Wall -Wextra -Werror -I/libft
 
 RM	= rm -rf
 

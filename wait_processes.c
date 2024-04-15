@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_pipes.c                                     :+:      :+:    :+:   */
+/*   wait_processes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 11:29:21 by mito              #+#    #+#             */
-/*   Updated: 2024/04/15 16:46:07 by mito             ###   ########.fr       */
+/*   Created: 2024/04/15 18:45:16 by mito              #+#    #+#             */
+/*   Updated: 2024/04/15 18:52:49 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-int	create_pipes(t_pipex *pipex)
+void	wait_processes(t_pipex *pipex)
 {
-	int i;
+	int	i;
+	int	wstatus;
 
 	i = 0;
-	while (i < pipex->num_pipes)
+	while (i < pipex->num_processes)
 	{
-		pipex->pipes[i] = malloc(sizeof(int) * 2);
-		if (!pipex->pipes[i])
-		{
-			clean_up(pipex);
-			return (-1);
-		}
-		if (pipe(pipex->pipes[i]) < 0)
-		{
-			clean_up(pipex);
-			return (-1);
-		}
+		if (wait(&wstatus) < 0 || errno == ECHILD)
+			break ;
+		if (WIFEXITED(wstatus))
+			pipex->status = WEXITSTATUS(wstatus);
 		i++;
-	}
-	return (0);
+	}	
 }

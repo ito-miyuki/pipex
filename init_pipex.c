@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:30:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/12 16:04:53 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/15 18:54:27 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ int		init_pipex(t_pipex *pipex, int argc, char **argv, char **paths) //argv here
 	pipex->pipes = malloc(sizeof(int *) * (pipex->num_pipes));
 	if (!pipex->pipes)
 		return (-1);
-	// 	int		status;
+	pipex->status = 0;
 	return (0);
 }

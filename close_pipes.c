@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_pipes.c                                     :+:      :+:    :+:   */
+/*   close_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 11:29:21 by mito              #+#    #+#             */
-/*   Updated: 2024/04/15 16:46:07 by mito             ###   ########.fr       */
+/*   Created: 2024/04/15 10:58:02 by mito              #+#    #+#             */
+/*   Updated: 2024/04/15 18:56:31 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-int	create_pipes(t_pipex *pipex)
+int	close_pipes(t_pipex *pipex)
 {
-	int i;
+	int	i;
+	int	status;
 
 	i = 0;
+	status = 0;
 	while (i < pipex->num_pipes)
 	{
-		pipex->pipes[i] = malloc(sizeof(int) * 2);
-		if (!pipex->pipes[i])
-		{
-			clean_up(pipex);
-			return (-1);
-		}
-		if (pipe(pipex->pipes[i]) < 0)
-		{
-			clean_up(pipex);
-			return (-1);
-		}
+		if (close(pipex->pipes[i][0]) < 0)
+			status = -1;
+		if (close(pipex->pipes[i][1]) < 0)
+			status = -1;
 		i++;
 	}
-	return (0);
+	return (status);
 }

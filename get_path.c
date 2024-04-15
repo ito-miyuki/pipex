@@ -6,15 +6,21 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:54:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/11 11:11:16 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/15 10:33:36 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
 /**
- * get_paths should return data like
- * {"/Users/mito/.brew/bin", "/usr/local/bin", /usr/bin", ..., "/Users/mito/.brew/bin"}
+ * PATH=/Users/mito/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+ * get_paths should return data with 2d array amd it looks like below;
+ * 
+ *  "/Users/mito/.brew/bin",
+ *  "/usr/local/bin", /usr/bin",
+ *  ...,
+ *  "/Users/mito/.brew/bin"
+ * 
  * return NULL if envp is NULL
 */
 #include <stdio.h>
@@ -31,8 +37,10 @@ char	**get_path(char **envp)
 	{
 		if (ft_strncmp("PATH", envp[i], 4) == 0)
 		{
-			temp = ft_split(envp[i], '=');
-			path = ft_split(temp[1], ':');
+			temp = ft_split(envp[i], '='); //first, split like PATH and /Users/mito/.brew/bin:/usr/.....
+			// if (temp == NULL) // do I need this part?
+			// 	return (NULL);
+			path = ft_split(temp[1], ':'); // then split by ';'. "/Users/mito/.brew/bin" "/usr/local/bin" ...
 			return (path);
 		}
 		i++;

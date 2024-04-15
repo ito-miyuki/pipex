@@ -6,14 +6,13 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:28:50 by mito              #+#    #+#             */
-/*   Updated: 2024/04/12 17:18:55 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/15 10:51:46 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-
-static int    ft_starts_with(const char *string, const char *search_string)
+static int    ft_starts_with(const char *string, const char *search_string) // string compare? 
 {
     size_t    string_len;
     size_t    search_string_len;
@@ -35,13 +34,12 @@ static int    ft_starts_with(const char *string, const char *search_string)
     return (1);
 }
 
-
 int    call_execve(char **paths, char **command)
 {
     char    *cmd_path;
     int        status;
 
-    if (paths == NULL || ft_starts_with(command[0], "/"))
+    if (paths == NULL || ft_starts_with(command[0], "/")) // what is the porpose of ft_start with?
         return (execve(command[0], command, NULL));
     status = 0;
     while (paths != NULL && *paths != NULL)
@@ -50,9 +48,9 @@ int    call_execve(char **paths, char **command)
         if (cmd_path == NULL)
             return (-1);
         if (access(cmd_path, X_OK) == 0)
-            status = execve(cmd_path, command, NULL);
+            status = execve(cmd_path, command, NULL); //it remain 0 if it succeed
         free(cmd_path);
-        if (status == -1)
+        if (status == -1) // when it's error
             return (-1);
         paths++;
     }

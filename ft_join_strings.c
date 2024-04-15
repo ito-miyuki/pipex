@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:26:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/12 17:26:57 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/15 10:12:37 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char    *ft_join_strings(int num_of_strings, ...)
     va_start(args_1, num_of_strings);
     va_copy(args_2, args_1);
     bytes = count_total_bytes(args_1, num_of_strings);
-    string = (char *)malloc((bytes + 1) * sizeof(char));
+    string = (char *)malloc(sizeof(char) * (bytes + 1));
     if (string == NULL)
         return (NULL);
     fill(string, args_2, num_of_strings);
