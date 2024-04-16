@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 18:45:16 by mito              #+#    #+#             */
-/*   Updated: 2024/04/15 18:52:49 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/16 15:48:46 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	wait_processes(t_pipex *pipex)
 		if (WIFEXITED(wstatus))
 			pipex->status = WEXITSTATUS(wstatus);
 		i++;
-	}	
+	}
 }

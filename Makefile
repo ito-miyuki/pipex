@@ -24,7 +24,7 @@ BONUS	=	main_bonus.c \
 BONUS_OBJS	= $(BONUS:.c=.o)
 
 CC	= cc
-
+#remove -g flag before submitting
 CFLAGS = -g -Wall -Wextra -Werror -I/libft
 
 RM	= rm -rf

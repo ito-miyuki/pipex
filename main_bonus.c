@@ -6,29 +6,23 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:57:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/12 16:06:33 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/16 16:13:28 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-Your program will be executed as follows:
-./pipex file1 cmd1 cmd2 file2
-
-argv[0]: pipex
-argv[1]: file1
-argv[2]: cmd1(ex, "ls -l")
-argv[3]: cmd2(ex, "wc -l")
-argv[4]: file2  
-
-例えば、$> ./pipex infile "ls -l" "wc -l" outfile
-*/
-
 #include "pipex_bonus.h"
+
+/*
+error handlings:
+-file permission
+-invalid command
+-empty command ""
+*/
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
-	// int		status;
+	int		status;
 
 	if (argc < 5)
 		return (write(2, "Error", 5), 1); //modify it according to the subject
@@ -38,8 +32,8 @@ int	main(int argc, char **argv, char **envp)
 		return (write(2, "Error", 5), 1); //modify it according to the subject
 	if (start_process(&pipex) < 0) //call fork function
 		return (clean_up(&pipex), 1); 
-	// wait_all_processes(&pipex); // will return exit status code of every childs
-	// status = pipex.status;
-	// cleanup(&pipex);
+	wait_processes(&pipex); // will return exit status code of every childs
+	status = pipex.status;
+	clean_up(&pipex);
 	return (0);
 }

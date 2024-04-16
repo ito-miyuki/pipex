@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:54:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/15 10:33:36 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/16 17:14:00 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	**get_path(char **envp)
 			// if (temp == NULL) // do I need this part?
 			// 	return (NULL);
 			path = ft_split(temp[1], ':'); // then split by ';'. "/Users/mito/.brew/bin" "/usr/local/bin" ...
+			//if(!path)
+			// do error handlimgs for failing malloc	
 			return (path);
 		}
 		i++;
