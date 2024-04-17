@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/15 18:56:46 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/17 18:46:44 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_pipex
 	int		num_pipes;
 	int		status; // to store execve's return value
 	char	**paths;
+	int		here_doc;
+	char	*limiter;
 }				t_pipex;
 
 int		init_pipex(t_pipex *pipex, int argc, char **argv, char **paths);
