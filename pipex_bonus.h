@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/17 18:46:44 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/18 10:59:38 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ int		call_execve(char **paths, char **command);
 
 int		close_pipes(t_pipex *pipex);
 void	wait_processes(t_pipex *pipex);
+
+char    **split_space_quote(char *str); //temp
 
 #endif

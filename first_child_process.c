@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:59:18 by mito              #+#    #+#             */
-/*   Updated: 2024/04/17 19:25:38 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/18 11:08:34 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@
 
 #include "pipex_bonus.h"
 
-
 static void	here_doc(t_pipex *pipex, int cmd_index)
 {
 	int		fd[2];
 	char	buf[1024];
 	ssize_t	bytes_read;
 
-	// argc count check
 	if (pipe(fd) == -1) // create one pipe
 	{
 		write(2, "Error", 5); //modify it according to the subject
@@ -41,8 +39,8 @@ static void	here_doc(t_pipex *pipex, int cmd_index)
 	}
 	while (1)
 	{
-		write(STDOUT_FILENO, "heredoc> ", 9);
-		// ft_putstr_fd("pipe heredoc> ", 1); // write to stdout
+		//write(STDOUT_FILENO, "heredoc> ", 9);
+		ft_putstr_fd("pipe heredoc> ", 1); // write to stdout
 		bytes_read = read(STDIN_FILENO, buf, 1023);
 		buf[bytes_read] = '\0';
 		// if (bytes_read < 0)
@@ -51,10 +49,8 @@ static void	here_doc(t_pipex *pipex, int cmd_index)
 		// // 	// close_pipes(pipex); 
 		// // 	// clean_up(pipex);
 		// }
-		if (
-			(size_t)bytes_read - 1 == ft_strlen(pipex->limiter)
-			&& ft_strncmp(buf, pipex->limiter, (size_t)bytes_read - 1) == 0
-		)
+		if ((size_t)bytes_read - 1 == ft_strlen(pipex->limiter)
+			&& ft_strncmp(buf, pipex->limiter, (size_t)bytes_read - 1) == 0)
 			break;
 		write(fd[1], buf, bytes_read);
 	}
@@ -72,7 +68,7 @@ void	first_child_process(t_pipex *pipex, int cmd_index)
 {
 	int in_fd;
 
-	ft_printf("heredoc == %d\n", pipex->here_doc);
+	// ft_printf("heredoc == %d\n", pipex->here_doc);
 	if (pipex->here_doc == 1)
 	{
 		//ft_printf("heredoc");

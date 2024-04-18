@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:54:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/16 17:14:00 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/18 11:03:04 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,3 @@ char	**get_path(char **envp)
 	}
 	return (NULL);
 }
-
-//for testing get_path function
-// int main(int argc, char **argv, char **envp)
-// {
-// 	char **res;
-	
-// 	res = get_paths(envp);
-// 	int i = 0;
-// 	while (res[i])
-// 	{
-// 		printf("%s\n", res[i]);
-// 		i++;
-// 	}
-// }

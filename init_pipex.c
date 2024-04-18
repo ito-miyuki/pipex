@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:30:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/17 19:15:30 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/18 11:18:03 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static char	***init_commands(char **av_cmds, int num_cmds, t_pipex *pipex)
 		return (NULL);
 	while (i < num_cmds)
 	{
-		commands[i] = ft_split(av_cmds[i], ' ');
+		//commands[i] = ft_split(av_cmds[i], ' ');
+		commands[i] = split_space_quote(av_cmds[i]); // for the cases like < input grep Hello | awk '{count++} END {print count}' > output
 		if (commands[i] == NULL)
 		{
 			clean_up(pipex);
