@@ -6,10 +6,9 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:03 by mito              #+#    #+#             */
-/*   Updated: 2024/04/12 10:47:24 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/18 12:50:41 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "pipex_bonus.h"
 
@@ -42,6 +41,11 @@ static void	delete_commands(t_pipex *pipex)
 	pipex->commands = NULL;
 }
 
+void	write_and_clean_up(t_pipex *pipex)
+{
+	write(2, "Error", 5);
+	clean_up(pipex);
+}
 void	clean_up(t_pipex *pipex)
 {
 	delete_commands(pipex);

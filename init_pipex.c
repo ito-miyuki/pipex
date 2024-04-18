@@ -6,24 +6,11 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:30:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/18 11:18:03 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/18 12:33:12 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-// typedef struct s_pipex
-// {
-// 	char	*input;
-// 	char	*output;
-// 	char	***commands;
-// 	int		**pipes; // to point each pipes
-// 	int		num_cmds;
-// 	int		num_processes;
-// 	int		num_pipes;
-// 	int		status; // to store execve's return value
-//  char	**paths;
-// }				t_pipex;
 
 //  for example,
 // ./pipex infile "ls -l" "wc -l" outfile

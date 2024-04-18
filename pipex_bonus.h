@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/18 10:59:38 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/18 12:48:03 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		init_pipex(t_pipex *pipex, int argc, char **argv, char **paths);
 char	**get_path(char **envp);
 int		create_pipes(t_pipex *pipex);
 void	clean_up(t_pipex *pipex);
+void	write_and_clean_up(t_pipex *pipex);
 
 int		start_process(t_pipex *pipex);
 void	first_child_process(t_pipex *pipex, int cmd_index);
