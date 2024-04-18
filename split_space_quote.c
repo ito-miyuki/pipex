@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:03:32 by mito              #+#    #+#             */
-/*   Updated: 2024/04/18 12:07:55 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/18 13:02:25 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,17 @@
 // 	return (result);
 // }
 
-static char **remove_quote(char **commands, int wc)
-{
-	char **res;
+// static char **remove_quote(char **commands, int wc)
+// {
+// 	char **res;
 
-	res = malloc(sizeof(char *) * (wc + 1));
+// 	res = malloc(sizeof(char *) * (wc + 1));
 	
-	//scan the whole 2d array
-	//allocate memory for the length without ''
-	// check if there is quote
-	// if yes, create
-}
+// 	//scan the whole 2d array
+// 	//allocate memory for the length without ''
+// 	// check if there is quote
+// 	// if yes, create
+// }
 
 static void	free_array(size_t i, char **array)
 {
@@ -135,7 +135,7 @@ char    **split_space_quote(char *str)
 	int res_i = 0;
 	int word_pos = 0;
 	char **res = malloc(sizeof(char *) * (wc + 1));
-	char **final;
+	//char **final;
 	if (!res)
 		return (NULL);
 	while (str[i] != '\0')
@@ -174,15 +174,15 @@ char    **split_space_quote(char *str)
 			res_i = 0;
 		}
 	}
-	res[arr_i] = (NULL);
-	final = remove_quote(res, wc);
-	return (final);
+	res[arr_i] = (NULL); // use memmove
+	//final = remove_quote(res, wc);
+	return (res);
 }
 
 
 int main(void)
 {
-	char str[] = "awk '{count++} END {print count}'";
+	char str[] = "awk '{count++} END {print count}' 'abx asd casd' ";
 	//char str[] = "awk {count++} END {print count}";
 	char **cmd = split_space_quote(str);
 
