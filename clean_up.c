@@ -6,13 +6,28 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:03 by mito              #+#    #+#             */
-/*   Updated: 2024/04/18 12:50:41 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/19 16:10:22 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static void	free_grid(char **grid)
+static void	free_pipes(int **pipes)
+{
+	size_t	i;
+
+	i = 0;
+	if (pipes == NULL)
+		return ;
+	while (pipes[i])
+	{
+		free(pipes[i]);
+		i++;
+	}
+	free(pipes);
+}
+
+void	free_grid(char **grid)
 {
 	size_t	i;
 
@@ -48,5 +63,10 @@ void	write_and_clean_up(t_pipex *pipex)
 }
 void	clean_up(t_pipex *pipex)
 {
-	delete_commands(pipex);
+	if (pipex->commands)
+		delete_commands(pipex);
+	if (pipex->paths)
+		free_grid(pipex->paths);
+	if(pipex->pipes)
+		free_pipes(pipex->pipes);
 }

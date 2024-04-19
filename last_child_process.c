@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:40:33 by mito              #+#    #+#             */
-/*   Updated: 2024/04/16 10:47:35 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/19 16:53:53 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	last_child_process(t_pipex *pipex, int cmd_index)
 	dup2(out_fd, STDOUT_FILENO);
 	close(out_fd);
 	call_execve(pipex->paths, pipex->commands[cmd_index]);
+	ft_putstr_fd("Command not found: XXX\n", 2); //put something!!
 	clean_up(pipex);
 	exit(1); // need to modify it later depends on error type
 }

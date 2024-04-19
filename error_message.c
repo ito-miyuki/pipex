@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   middle_child_process.c                             :+:      :+:    :+:   */
+/*   error_message.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 11:21:03 by mito              #+#    #+#             */
-/*   Updated: 2024/04/19 12:23:00 by mito             ###   ########.fr       */
+/*   Created: 2024/04/19 16:46:35 by mito              #+#    #+#             */
+/*   Updated: 2024/04/19 16:49:25 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	middle_child_process(t_pipex *pipex, int cmd_index)
+void	msg_incorrect_cmd(char *command)
 {
-	dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO); // write for the next pipe
-	dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO); // read from previous pipe
-	close_pipes(pipex);
-	call_execve(pipex->paths, pipex->commands[cmd_index]);
-	write_and_clean_up(pipex);
-	exit(1); // need to modify it later depends on error type
+	char *message;
+
+	message = "command not found: ";
+	write(2, message, ft_strlen(message));
+	write(2, command, ft_strlen(command));
+	write(2, "\n", 1);
 }

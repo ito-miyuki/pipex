@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:30:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/18 12:33:12 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/19 16:04:42 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ int		init_pipex(t_pipex *pipex, int argc, char **argv, char **paths) //argv here
 	pipex->infile = argv[0];
 	pipex->outfile = argv[argc - 1];
 	pipex->here_doc = 0;
-	pipex->limiter = NULL;
 	if (ft_strncmp(argv[0], "here_doc", 8) == 0)
 	{
 		pipex->here_doc = 1;
 		pipex->limiter = argv[1];
 		argc--;
-	}	
+	}
 	pipex->paths = paths;
 	pipex->num_cmds = argc - 2; // argc - infile - outfile
 	pipex->num_processes = argc - 2;

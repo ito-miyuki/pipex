@@ -6,89 +6,54 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:03:32 by mito              #+#    #+#             */
-/*   Updated: 2024/04/18 13:02:25 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/19 16:10:06 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-// static size_t	ft_word_len(char const *str, char space, char quote)
-// {
-// 	size_t	i;
+static char **remove_quote(char **commands, int wc)
+{
+	char **res;
+	int i;
+	int str_len;
 
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] != space && str[i] != quote)
-// 			i++;
-// 		else if ()
-// 		else
-// 			return (i);
-// 	}
-// 	return (i);
-// }
-
-// // static void	free_array(size_t i, char **array)
-// // {
-// // 	while (i > 0)
-// // 	{
-// // 		i--;
-// // 		free(array[i]);
-// // 	}
-// // 	free(array);
-// // }
-
-// static char	**split(char const *str, char space, char quote, char **array, size_t words_count)
-// {
-// 	size_t	i;
-// 	size_t	j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (i < words_count)
-// 	{
-// 		while (*(str + j) && *(str + j) == space)
-// 			j++;
-// 		array[i] = ft_substr(str, j, ft_word_len(&*(str + j), space, quote));
-// 		if (!array[i])
-// 		{
-// 			free_array(i, array);
-// 			return (NULL);
-// 		}
-// 		while (*(str + j) && *(str + j) != space)
-// 			j++;
-// 		i++;
-// 	}
-// 	*(array + i) = NULL;
-// 	return (array);
-// }
-
-// char	**split_space_quote(char *str)
-// {
-// 	char	**result;
-// 	size_t	wc;
-
-// 	if (!str)
-// 		return (NULL);
-// 	wc = count_words(str);
-// 	result = (char **)malloc(sizeof(char *) * (wc + 1));
-// 	if (!result)
-// 		return (NULL);
-// 	result = split(str, ' ', result, wc);
-// 	return (result);
-// }
-
-// static char **remove_quote(char **commands, int wc)
-// {
-// 	char **res;
-
-// 	res = malloc(sizeof(char *) * (wc + 1));
+	res = malloc(sizeof(char *) * (wc + 1));
+	i = 0;
+	str_len = 0;
 	
-// 	//scan the whole 2d array
-// 	//allocate memory for the length without ''
-// 	// check if there is quote
-// 	// if yes, create
-// }
+	while (commands[i] != NULL)
+	{
+		str_len = ft_strlen(commands[i]);
+		if (commands[i][0] == 39 && commands[i][str_len - 1] == 39)
+		{
+			res[i] = malloc(sizeof(char) * (str_len - 1));
+			if (!res)
+			{
+				free_grid(res);
+				return (NULL);	
+			}
+			//res[i] = ft_memmove(res[i], commands[i][1], str_len - 1);	
+			res[i] = ft_strndup(&commands[i][1], str_len - 2);
+			if (!res)
+			{
+				free_grid(res);
+				return (NULL);
+			}
+		}
+		else
+		{
+			res[i] = ft_strdup(commands[i]);
+			if (!res)
+			{
+				free_grid(res);			
+				return (NULL);	
+			}
+		}
+		i++;
+	}
+	return (res);
+}
 
 static void	free_array(size_t i, char **array)
 {
@@ -101,7 +66,7 @@ static void	free_array(size_t i, char **array)
 }
 
 
-int count_words(char *str)
+static int count_words(char *str)
 {
     int i = 0;
     int wc = 0;
@@ -129,13 +94,12 @@ int count_words(char *str)
 char    **split_space_quote(char *str)
 {
 	int wc = count_words(str);
-	//printf("wc is %d\n", wc);
 	int arr_i = 0;
 	int i = 0;
 	int res_i = 0;
 	int word_pos = 0;
 	char **res = malloc(sizeof(char *) * (wc + 1));
-	//char **final;
+	char **final;
 	if (!res)
 		return (NULL);
 	while (str[i] != '\0')
@@ -174,33 +138,23 @@ char    **split_space_quote(char *str)
 			res_i = 0;
 		}
 	}
-	res[arr_i] = (NULL); // use memmove
-	//final = remove_quote(res, wc);
-	return (res);
+	res[arr_i] = (NULL); 
+	final = remove_quote(res, wc);
+	if (!final)
+		return (NULL);
+	return (final);
 }
 
+// int main(void)
+// {
+// 	char str[] = "awk '{count++} END {print count}' 'abx asd casd' ";
+// 	//char str[] = "awk {count++} END {print count}";
+// 	char **cmd = split_space_quote(str);
 
-int main(void)
-{
-	char str[] = "awk '{count++} END {print count}' 'abx asd casd' ";
-	//char str[] = "awk {count++} END {print count}";
-	char **cmd = split_space_quote(str);
-
-	int i = 0;
-	while (cmd && cmd[i] != NULL)
-	{
-		printf("%s\n", cmd[i]);
-		i++;
-	}
-}
-
-/*
-split the string like this:
-"./pipex "input" "grep Hello" "awk '{count++} END {print count}'" outfile
-
-and expected result is like this:
-"awk"
-"'{count++} END {print count}'"
-
-then after that, creat a function to remove ' '.
-*/
+// 	int i = 0;
+// 	while (cmd && cmd[i] != NULL)
+// 	{
+// 		printf("%s\n", cmd[i]);
+// 		i++;
+// 	} 
+// }

@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/18 12:48:03 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/19 16:57:30 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_pipex
 int		init_pipex(t_pipex *pipex, int argc, char **argv, char **paths);
 char	**get_path(char **envp);
 int		create_pipes(t_pipex *pipex);
+void	free_grid(char **grid);
 void	clean_up(t_pipex *pipex);
 void	write_and_clean_up(t_pipex *pipex);
 

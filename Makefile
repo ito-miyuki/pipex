@@ -18,7 +18,7 @@ BONUS	=	main_bonus.c \
 			middle_child_process.c \
 			close_pipes.c \
 			wait_processes.c \
-			split_space_quote.c
+			split_space_quote.c \
 
 #OBJS	= $(SRCS:.c=.o)
 

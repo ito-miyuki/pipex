@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:40:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/18 12:47:23 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/19 17:01:50 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	here_doc(t_pipex *pipex, int cmd_index)
 	dup2(fd[0], STDIN_FILENO);
 	call_execve(pipex->paths, pipex->commands[cmd_index]);
 	// From this line, error already happened in execve()
-	clean_up(pipex);
+	write_and_clean_up(pipex);
 	exit(1); // need to modify it later depends on error type
 }
 
@@ -68,8 +68,9 @@ void	first_child_process(t_pipex *pipex, int cmd_index)
 		dup2(in_fd, STDIN_FILENO); // STDIN_FILENO is now poiting to in_fd
 		close(in_fd);
 		call_execve(pipex->paths, pipex->commands[cmd_index]);
-		// From this line, error already happened in execve()
 		clean_up(pipex);
+		//ft_putstr_fd("Command not found: XXX\n", 2); //put something!!
+		perror("incorrect command input\n");
 		exit(1); // need to modify it later depends on error type
 	}
 }
