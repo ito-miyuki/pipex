@@ -6,20 +6,20 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:03 by mito              #+#    #+#             */
-/*   Updated: 2024/04/19 16:10:22 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/23 16:03:43 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static void	free_pipes(int **pipes)
+static void	free_pipes(t_pipex *pipex, int **pipes)
 {
 	size_t	i;
 
 	i = 0;
 	if (pipes == NULL)
 		return ;
-	while (pipes[i])
+	while (i < pipex->num_pipes)
 	{
 		free(pipes[i]);
 		i++;
@@ -32,7 +32,7 @@ void	free_grid(char **grid)
 	size_t	i;
 
 	i = 0;
-	if (grid == NULL)
+	if (grid == NULL || *grid == NULL) // Do I need *grid == NULL condition too?
 		return ;
 	while (grid[i] != NULL)
 	{
@@ -66,7 +66,7 @@ void	clean_up(t_pipex *pipex)
 	if (pipex->commands)
 		delete_commands(pipex);
 	if (pipex->paths)
-		free_grid(pipex->paths);
+	 	free_grid(pipex->paths);
 	if(pipex->pipes)
-		free_pipes(pipex->pipes);
+	 	free_pipes(pipex, pipex->pipes);
 }

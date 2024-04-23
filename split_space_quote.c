@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:03:32 by mito              #+#    #+#             */
-/*   Updated: 2024/04/19 16:10:06 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/23 15:48:24 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static char **remove_quote(char **commands, int wc)
 			res[i] = malloc(sizeof(char) * (str_len - 1));
 			if (!res)
 			{
-				free_grid(res);
+				//free_grid(res);
 				return (NULL);	
 			}
 			//res[i] = ft_memmove(res[i], commands[i][1], str_len - 1);	
 			res[i] = ft_strndup(&commands[i][1], str_len - 2);
 			if (!res)
 			{
-				free_grid(res);
+				//free_grid(res);
 				return (NULL);
 			}
 		}
@@ -46,12 +46,13 @@ static char **remove_quote(char **commands, int wc)
 			res[i] = ft_strdup(commands[i]);
 			if (!res)
 			{
-				free_grid(res);			
+				//free_grid(res);			
 				return (NULL);	
 			}
 		}
 		i++;
 	}
+	res[i] = NULL;
 	return (res);
 }
 
@@ -138,7 +139,7 @@ char    **split_space_quote(char *str)
 			res_i = 0;
 		}
 	}
-	res[arr_i] = (NULL); 
+	res[arr_i] = (NULL);
 	final = remove_quote(res, wc);
 	if (!final)
 		return (NULL);
@@ -147,8 +148,8 @@ char    **split_space_quote(char *str)
 
 // int main(void)
 // {
-// 	char str[] = "awk '{count++} END {print count}' 'abx asd casd' ";
-// 	//char str[] = "awk {count++} END {print count}";
+// 	//char str[] = "awk '{count++} END {print count}' 'abx asd casd' ";
+// 	char str[] = "cat";
 // 	char **cmd = split_space_quote(str);
 
 // 	int i = 0;

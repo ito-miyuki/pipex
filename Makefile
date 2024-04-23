@@ -19,14 +19,17 @@ BONUS	=	main_bonus.c \
 			close_pipes.c \
 			wait_processes.c \
 			split_space_quote.c \
+			print_execve_error.c
 
 #OBJS	= $(SRCS:.c=.o)
 
 BONUS_OBJS	= $(BONUS:.c=.o)
 
 CC	= cc
+
 #remove -g flag before submitting
-CFLAGS = -g -Wall -Wextra -Werror -I/libft
+#remove -fsanitize=address flag before submitting
+CFLAGS = -g -fsanitize=address -Werror -Wall -Wextra -I/libft
 
 RM	= rm -rf
 

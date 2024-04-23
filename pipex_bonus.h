@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/19 16:57:30 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/23 17:28:59 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <fcntl.h> // for open
 # include <stdio.h> // for printf/testing. delete it if you don't need it!
 # include <unistd.h> // for pipe function
-# include <errno.h>
+# include <errno.h> // for strerror
+# include <string.h> // for strerror
 
 typedef struct s_pipex
 {
@@ -48,10 +49,15 @@ void	middle_child_process(t_pipex *pipex, int cmd_index);
 
 char	*ft_join_strings(int num_of_strings, ...);
 int		call_execve(char **paths, char **command);
+int		ft_starts_with(const char *string, const char *search_string);
+int		ft_ends_with(const char *string, const char *search_string);
 
 int		close_pipes(t_pipex *pipex);
 void	wait_processes(t_pipex *pipex);
 
 char    **split_space_quote(char *str); //temp
+
+void	print_execve_error(char *cmd_name);
+void	print_file_error(t_pipex *pipex);
 
 #endif

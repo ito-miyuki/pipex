@@ -6,13 +6,13 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:28:50 by mito              #+#    #+#             */
-/*   Updated: 2024/04/19 16:41:34 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/23 13:41:58 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static int    ft_starts_with(const char *string, const char *search_string) // string compare? 
+int    ft_starts_with(const char *string, const char *search_string) // string compare? 
 {
     size_t    string_len;
     size_t    search_string_len;
@@ -34,6 +34,29 @@ static int    ft_starts_with(const char *string, const char *search_string) // s
     return (1);
 }
 
+int	ft_ends_with(const char *string, const char *search_string)
+{
+	size_t		ss_length;
+	size_t		string_length;
+	const char	*temp;
+
+	ss_length = ft_strlen(search_string);
+	if (ss_length == 0)
+		return (1);
+	string_length = ft_strlen(string);
+	if (ss_length > string_length)
+		return (0);
+	temp = string + string_length - ss_length;
+	while (*temp != '\0' && *search_string != '\0')
+	{
+		if (*temp != *search_string)
+			return (0);
+		temp++;
+		search_string++;
+	}
+	return (1);
+}
+
 int    call_execve(char **paths, char **command)
 {
     char    *cmd_path;
@@ -45,14 +68,15 @@ int    call_execve(char **paths, char **command)
     while (paths != NULL && *paths != NULL)
     {
         cmd_path = ft_join_strings(3, *paths, "/", command[0]);
+        
         if (cmd_path == NULL)
             return (-1);
-        if (access(cmd_path, X_OK) == 0)
-            status = execve(cmd_path, command, NULL); //it remain 0 if it succeed
+        if (access(cmd_path, X_OK) == 0) // 0 means that it is excutable
+            status = execve(cmd_path, command, NULL);
         free(cmd_path);
         if (status == -1) // when it's error
             return (-1);
         paths++;
     }
-    return (execve(command[0], command, NULL));
+    return (execve(command[0], command, NULL)); // this is when we couldn't find the valid path
 }
