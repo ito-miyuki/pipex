@@ -6,18 +6,18 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:28:50 by mito              #+#    #+#             */
-/*   Updated: 2024/04/25 14:59:51 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/25 15:26:55 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-int ft_starts_with(const char *string, const char *search_string)
+int	ft_starts_with(const char *string, const char *search_string)
 {
-    size_t  string_len;
-    size_t  search_string_len;
-    size_t  i;
-    
+    size_t	string_len;
+    size_t	search_string_len;
+    size_t	i;
+
     if (*search_string == '\0')
         return (1);
     string_len = ft_strlen(string);

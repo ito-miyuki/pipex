@@ -14,7 +14,7 @@
 
 int	create_pipes(t_pipex *pipex)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < pipex->num_pipes)

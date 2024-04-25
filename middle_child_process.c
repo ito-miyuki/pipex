@@ -14,8 +14,18 @@
 
 void	middle_child_process(t_pipex *pipex, int cmd_index)
 {
-	dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO); // write for the next pipe
-	dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO); // read from previous pipe
+	if (dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO) < 0) // write for the next pipe
+	{
+		write_and_clean_up(pipex);
+		exit(1);
+		//should I close pipes?
+	}
+	if (dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO) < 0) // read from previous pipe
+	{
+		write_and_clean_up(pipex);
+		exit(1);
+		//should I close pipes?
+	}
 	close_pipes(pipex);
 	call_execve(pipex->paths, pipex->commands[cmd_index]);
 	print_execve_error(pipex, *pipex->commands[cmd_index]);

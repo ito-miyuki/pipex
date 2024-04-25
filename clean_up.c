@@ -49,7 +49,7 @@ static void	delete_commands(t_pipex *pipex)
 	i = 0;
 	while (pipex->commands != NULL && pipex->commands[i] != NULL)
 	{
-		free_grid(pipex->commands[i]);		
+		free_grid(pipex->commands[i]);
 		i++;
 	}
 	free(pipex->commands);
@@ -61,12 +61,13 @@ void	write_and_clean_up(t_pipex *pipex)
 	write(2, "Error", 5);
 	clean_up(pipex);
 }
+
 void	clean_up(t_pipex *pipex)
 {
 	if (pipex->commands)
 		delete_commands(pipex);
 	if (pipex->paths)
-	 	free_grid(pipex->paths);
-	if(pipex->pipes)
-	 	free_pipes(pipex, pipex->pipes);
+		free_grid(pipex->paths);
+	if (pipex->pipes)
+		free_pipes(pipex, pipex->pipes);
 }
