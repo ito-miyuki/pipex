@@ -19,7 +19,8 @@ BONUS	=	main_bonus.c \
 			close_pipes.c \
 			wait_processes.c \
 			split_space_quote.c \
-			print_execve_error.c
+			print_execve_error.c \
+			ft_exit.c
 
 #OBJS	= $(SRCS:.c=.o)
 
@@ -29,7 +30,8 @@ CC	= cc
 
 #remove -g flag before submitting
 #remove -fsanitize=address flag before submitting
-CFLAGS = -g -fsanitize=address -Werror -Wall -Wextra -I/libft
+#add -Werror
+CFLAGS = -g -fsanitize=address -Wall -Wextra -I/libft
 
 RM	= rm -rf
 

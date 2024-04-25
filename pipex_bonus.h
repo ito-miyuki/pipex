@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/23 17:28:59 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/25 10:53:53 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,12 @@ int		ft_ends_with(const char *string, const char *search_string);
 int		close_pipes(t_pipex *pipex);
 void	wait_processes(t_pipex *pipex);
 
-char    **split_space_quote(char *str); //temp
+char    **split_space_quote(char *str);
 
-void	print_execve_error(char *cmd_name);
-void	print_file_error(t_pipex *pipex);
+void	print_execve_error(t_pipex *pipex, char *cmd_name);
+void	print_infile_error(t_pipex *pipex);
+void	print_outfile_error(t_pipex *pipex);
+
+void	ft_exit(t_pipex *pipex, int exit_code);
 
 #endif

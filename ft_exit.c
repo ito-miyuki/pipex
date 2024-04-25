@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   middle_child_process.c                             :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 11:21:03 by mito              #+#    #+#             */
-/*   Updated: 2024/04/25 10:23:18 by mito             ###   ########.fr       */
+/*   Created: 2024/04/25 10:19:15 by mito              #+#    #+#             */
+/*   Updated: 2024/04/25 11:42:10 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	middle_child_process(t_pipex *pipex, int cmd_index)
+void	ft_exit(t_pipex *pipex, int exit_code)
 {
-	dup2(pipex->pipes[cmd_index][1], STDOUT_FILENO); // write for the next pipe
-	dup2(pipex->pipes[cmd_index - 1][0], STDIN_FILENO); // read from previous pipe
-	close_pipes(pipex);
-	call_execve(pipex->paths, pipex->commands[cmd_index]);
-	print_execve_error(pipex, *pipex->commands[cmd_index]);
+	clean_up(pipex);
+	exit(exit_code);
 }

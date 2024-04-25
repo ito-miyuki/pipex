@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:40:33 by mito              #+#    #+#             */
-/*   Updated: 2024/04/23 17:29:09 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/25 14:51:22 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,18 @@
 void	last_child_process(t_pipex *pipex, int cmd_index)
 {
 	int	out_fd;
-	dup2(pipex->pipes[pipex->num_pipes - 1][0], STDIN_FILENO); //STDIN_FILENO is pointing the last pipes
-	close_pipes(pipex);
 
 	out_fd = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644); // check 0644
 	if (out_fd < 0)
 	{
-		print_file_error(pipex);
 		close_pipes(pipex); 
-		clean_up(pipex);
-		exit (EXIT_FAILURE);
+		print_outfile_error(pipex);
+		ft_exit(pipex, 1);
 	}
+	dup2(pipex->pipes[pipex->num_pipes - 1][0], STDIN_FILENO); //STDIN_FILENO is pointing the last pipes
+	close_pipes(pipex);
 	dup2(out_fd, STDOUT_FILENO);
 	close(out_fd);
 	call_execve(pipex->paths, pipex->commands[cmd_index]);
-	print_execve_error(*pipex->commands[cmd_index]);
-	clean_up(pipex);
-	exit(1); // need to modify it later depends on error type
+	print_execve_error(pipex, *pipex->commands[cmd_index]);
 }

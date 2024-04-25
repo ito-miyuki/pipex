@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:40:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/23 17:34:15 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/25 14:46:39 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ static void	here_doc(t_pipex *pipex, int cmd_index)
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	call_execve(pipex->paths, pipex->commands[cmd_index]);
-	print_execve_error(*pipex->commands[cmd_index]);
-	clean_up(pipex);
-	exit(1); // need to modify it later depends on error type
+	print_execve_error(pipex, *pipex->commands[cmd_index]);
 }
 
 void	first_child_process(t_pipex *pipex, int cmd_index)
@@ -57,21 +55,17 @@ void	first_child_process(t_pipex *pipex, int cmd_index)
 		here_doc(pipex, cmd_index); 
 	else
 	{
-		dup2(pipex->pipes[0][1], STDOUT_FILENO);
-		close_pipes(pipex);
 		in_fd = open(pipex->infile, O_RDONLY);
 		if (in_fd < 0)
 		{
-			print_file_error(pipex);
-			close_pipes(pipex); 
-			clean_up(pipex);
-			exit (EXIT_FAILURE);
+			print_infile_error(pipex);
+			ft_exit(pipex, 1);
 		}
 		dup2(in_fd, STDIN_FILENO); // STDIN_FILENO is now poiting to in_fd
 		close(in_fd);
+		dup2(pipex->pipes[0][1], STDOUT_FILENO);
+		close_pipes(pipex);
 		call_execve(pipex->paths, pipex->commands[cmd_index]);
-		print_execve_error(*pipex->commands[cmd_index]);
-		clean_up(pipex);
-		exit (EXIT_FAILURE);; // need to modify it later depends on error type
+		print_execve_error(pipex, *pipex->commands[cmd_index]);
 	}
 }

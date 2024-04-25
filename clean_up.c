@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:03 by mito              #+#    #+#             */
-/*   Updated: 2024/04/23 16:03:43 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/24 10:06:47 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	free_pipes(t_pipex *pipex, int **pipes)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (pipes == NULL)

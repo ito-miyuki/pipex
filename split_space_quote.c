@@ -6,11 +6,40 @@
 /*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:03:32 by mito              #+#    #+#             */
-/*   Updated: 2024/04/23 15:48:24 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/25 14:07:57 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+static int	is_only_space(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == ' ' || str[i] == '\t')
+			i++;
+		else
+			return (0);		
+	}
+	return (1);
+}
+
+static char **copy_empty_cmd(char *str)
+{
+	char	**res;
+
+	res = malloc(sizeof(char *) * 2);
+	if (!res)
+		return (NULL);
+	res[0] = ft_strdup(str);
+	if (!res)
+		return (NULL);
+	res[1] = NULL;
+	return (res);
+}
 
 static char **remove_quote(char **commands, int wc)
 {
@@ -21,7 +50,7 @@ static char **remove_quote(char **commands, int wc)
 	res = malloc(sizeof(char *) * (wc + 1));
 	i = 0;
 	str_len = 0;
-	
+
 	while (commands[i] != NULL)
 	{
 		str_len = ft_strlen(commands[i]);
@@ -69,8 +98,11 @@ static void	free_array(size_t i, char **array)
 
 static int count_words(char *str)
 {
-    int i = 0;
-    int wc = 0;
+    int i;
+    int wc;
+	
+	i = 0;
+	wc = 0;
     while (str[i] !='\0')
     {
         while (str[i] != '\0' && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')) //空白だったら飛ばす
@@ -99,8 +131,18 @@ char    **split_space_quote(char *str)
 	int i = 0;
 	int res_i = 0;
 	int word_pos = 0;
-	char **res = malloc(sizeof(char *) * (wc + 1));
+	char **res;
 	char **final;
+	if((is_only_space(str)) == 1)
+	{
+		res = copy_empty_cmd(str);
+		// printf("res 0 is %s\n", res[0]);
+		// printf("res 1 is %s\n", res[1]);
+		return (res);
+	}
+	res = malloc(sizeof(char *) * (wc + 1));
+	// if (str == NULL)
+	// 	return (NULL);
 	if (!res)
 		return (NULL);
 	while (str[i] != '\0')
@@ -148,8 +190,9 @@ char    **split_space_quote(char *str)
 
 // int main(void)
 // {
-// 	//char str[] = "awk '{count++} END {print count}' 'abx asd casd' ";
-// 	char str[] = "cat";
+// 	//char str[] = "awk '{count++} END {print count}' 'abx asd casd'    ";
+// 	//char str[] = "awk "{count++} END {print count}""; これは出来ない
+// 	char str[] = "";
 // 	char **cmd = split_space_quote(str);
 
 // 	int i = 0;
