@@ -12,50 +12,79 @@
 
 #include "pipex_bonus.h"
 
-static void	here_doc(t_pipex *pipex, int cmd_index)
+static void	read_user_input(t_pipex *pipex, int fd_out)
 {
-	int		fd[2];
 	char	buf[1024];
 	ssize_t	bytes_read;
 
-	if (pipe(fd) == -1)
-	{
-		write_and_clean_up(pipex);
-		exit(1);
-	}
 	while (1)
 	{
 		ft_putstr_fd("pipe heredoc> ", 1);
 		bytes_read = read(STDIN_FILENO, buf, 1023);
 		buf[bytes_read] = '\0';
 		if (bytes_read < 0)
-		{
-			close_pipes(pipex);
-			clean_up(pipex);
-			exit(1);
-		}
+			ft_exit(pipex, "pipex: here_doc(): read fail", 1, 1);
 		if ((size_t)bytes_read - 1 == ft_strlen(pipex->limiter)
 			&& ft_strncmp(buf, pipex->limiter, (size_t)bytes_read - 1) == 0)
 			break ;
-		write(fd[1], buf, bytes_read);
+		write(fd_out, buf, bytes_read);
 	}
+}
+
+static void	here_doc(t_pipex *pipex, int cmd_index)
+{
+	int		fd[2];
+
+	if (pipe(fd) == -1)
+		ft_exit(pipex, "pipex: here_doc() fail", 0, 1); //pipes?
+	read_user_input(pipex, fd[1]);
 	if (dup2(pipex->pipes[0][1], STDOUT_FILENO) < 0)
 	{
-		write_and_clean_up(pipex);
-			exit(1);
-			//should I close pipes?
+		close(fd[1]);
+		ft_exit(pipex, "pipex: here_doc(): dup2 stdout fail", 1, 1); // close pipes?
 	}
-	close_pipes(pipex);
+	if (close_pipes(pipex) == -1)
+		ft_exit(pipex, "pipex: here_doc(): close_pipes() fail", 0, 1); //should I close pipes?
 	close(fd[1]);
 	if (dup2(fd[0], STDIN_FILENO) < 0)
-	{
-		write_and_clean_up(pipex);
-		exit(1);
-		//should I close pipes?
-	}
-	call_execve(pipex->paths, pipex->commands[cmd_index]);
+		ft_exit(pipex, "pipex: here_doc(): dup2 stdin fail", 1, 1); // close pipes?
+	call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
 	print_execve_error(pipex, *pipex->commands[cmd_index]);
 }
+
+// static void	here_doc(t_pipex *pipex, int cmd_index)
+// {
+// 	int		fd[2];
+// 	char	buf[1024];
+// 	ssize_t	bytes_read;
+
+// 	if (pipe(fd) == -1)
+// 		ft_exit(pipex, "pipex: here_doc() fail", 0, 1); //pipes?
+// 	while (1)
+// 	{
+// 		ft_putstr_fd("pipe heredoc> ", 1);
+// 		bytes_read = read(STDIN_FILENO, buf, 1023);
+// 		buf[bytes_read] = '\0';
+// 		if (bytes_read < 0)
+// 			ft_exit(pipex, "pipex: here_doc(): read fail", 1, 1);
+// 		if ((size_t)bytes_read - 1 == ft_strlen(pipex->limiter)
+// 			&& ft_strncmp(buf, pipex->limiter, (size_t)bytes_read - 1) == 0)
+// 			break ;
+// 		write(fd[1], buf, bytes_read);
+// 	}
+// 	if (dup2(pipex->pipes[0][1], STDOUT_FILENO) < 0)
+// 	{
+// 		close(fd[1]);
+// 		ft_exit(pipex, "pipex: here_doc(): dup2 stdout fail", 1, 1); // close pipes?
+// 	}
+// 	if (close_pipes(pipex) == -1)
+// 		ft_exit(pipex, "pipex: here_doc(): close_pipes() fail", 0, 1); //should I close pipes?
+// 	close(fd[1]);
+// 	if (dup2(fd[0], STDIN_FILENO) < 0)
+// 		ft_exit(pipex, "pipex: here_doc(): dup2 stdin fail", 1, 1); // close pipes?
+// 	call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
+// 	print_execve_error(pipex, *pipex->commands[cmd_index]);
+// }
 
 void	first_child_process(t_pipex *pipex, int cmd_index)
 {
@@ -67,25 +96,19 @@ void	first_child_process(t_pipex *pipex, int cmd_index)
 	{
 		in_fd = open(pipex->infile, O_RDONLY);
 		if (in_fd < 0)
-		{
-			print_infile_error(pipex);
-			ft_exit(pipex, 1);
-		}
+			print_infile_error(pipex); // no need to close pipes
 		if (dup2(in_fd, STDIN_FILENO) < 0)
 		{
-			write_and_clean_up(pipex);
-			exit(1);
-			//should I close pipes?
+			close(in_fd); // should I do close fail check?
+			ft_exit(pipex, "pipex: first_child_process(): dup2() STDIN_FILENO fail", 0, 1); //should I close pipes? what is the exit code?
 		}
-		close(in_fd);
-		if (dup2(pipex->pipes[0][1], STDOUT_FILENO)< 0)
-		{
-			print_infile_error(pipex);
-			ft_exit(pipex, 1);
-			//should I close pipes?
-		}
-		close_pipes(pipex);
-		call_execve(pipex->paths, pipex->commands[cmd_index]);
+		if (close(in_fd) < 0)
+			ft_exit(pipex, "pipex: first_child_process(): close(in_fd) fail", 0, 1);
+		if (dup2(pipex->pipes[0][1], STDOUT_FILENO) < 0)
+			ft_exit(pipex, "pipex: first_child_process(): dup2() STDOUT_FILENO fail", 0, 1); //should I close pipes?
+		if (close_pipes(pipex) == -1)
+			ft_exit(pipex, "pipex: first_child_process(): close_pipes() fail", 0, 1); //should I close pipes?
+		call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
 		print_execve_error(pipex, *pipex->commands[cmd_index]);
 	}
 }

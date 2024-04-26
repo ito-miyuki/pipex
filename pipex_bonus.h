@@ -30,6 +30,7 @@ typedef struct s_pipex
 	int		num_processes;
 	int		num_pipes;
 	int		status; // to store execve's return value
+	char	**envp;
 	char	**paths;
 	int		here_doc;
 	char	*limiter;
@@ -48,19 +49,22 @@ void	last_child_process(t_pipex *pipex, int cmd_index);
 void	middle_child_process(t_pipex *pipex, int cmd_index);
 
 char	*ft_join_strings(int num_of_strings, ...);
-int		call_execve(char **paths, char **command);
+int		call_execve(char **envp, char **paths, char **command);
 int		ft_starts_with(const char *string, const char *search_string);
 int		ft_ends_with(const char *string, const char *search_string);
 
 int		close_pipes(t_pipex *pipex);
 void	wait_processes(t_pipex *pipex);
 
-char    **split_space_quote(char *str);
+char	**split_space_quote(char *str);
 
 void	print_execve_error(t_pipex *pipex, char *cmd_name);
 void	print_infile_error(t_pipex *pipex);
 void	print_outfile_error(t_pipex *pipex);
 
-void	ft_exit(t_pipex *pipex, int exit_code);
+void	ft_exit(t_pipex *pipex, const char *err_msg,
+			int should_close_pipes, int exit_code);
+
+char	**ft_parse_cmd(const char *cmd);
 
 #endif

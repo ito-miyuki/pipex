@@ -30,7 +30,7 @@ CC	= cc
 
 #remove -g flag before submitting
 #remove -fsanitize=address flag before submitting
-CFLAGS = -g -fsanitize=address -Werror -Wall -Wextra -I/libft
+CFLAGS = -g -Werror -Wall -Wextra -I/libft
 
 RM	= rm -rf
 

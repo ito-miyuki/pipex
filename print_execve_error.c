@@ -12,34 +12,35 @@
 
 #include "pipex_bonus.h"
 
-
 void	print_outfile_error(t_pipex *pipex)
 {
-	const char *error_message;
-	error_message = strerror(errno);
+	const char	*error_message;
 
+	error_message = strerror(errno);
 	write(2, "pipex: ", 7);
 	write(2, pipex->outfile, ft_strlen(pipex->infile));
 	write(2, ": ", 2);
 	write(2, error_message, ft_strlen(error_message));
 	write(2, "\n", 1);
+	ft_exit(pipex, NULL, 1, 1);
 }
 
 void	print_infile_error(t_pipex *pipex)
 {
-	const char *error_message;
-	error_message = strerror(errno);
+	const char	*error_message;
 
+	error_message = strerror(errno);
 	write(2, "pipex: ", 7);
 	write(2, pipex->infile, ft_strlen(pipex->infile));
 	write(2, ": ", 2);
 	write(2, error_message, ft_strlen(error_message));
 	write(2, "\n", 1);
+	ft_exit(pipex, NULL, 0, 1);
 }
 
 void	print_execve_error(t_pipex *pipex, char *cmd_name)
 {
-	const char *error_message;
+	const char	*error_message;
 
 	error_message = strerror(errno);
 	write(2, "pipex: ", 7);
@@ -47,50 +48,20 @@ void	print_execve_error(t_pipex *pipex, char *cmd_name)
 	write(2, ": ", 2);
 	if (errno == ENOENT) // "No such file or directory"
 	{
-		if (pipex->paths == NULL)
-		{
-			write(2, error_message, ft_strlen(error_message));
-			write(2, "\n", 1);
-			ft_exit(pipex, 127);
-		}
-		else
+		if (pipex->paths == NULL) // path doesn't exisit
+			ft_exit(pipex, error_message, 0, 127);
+		else // path is wrong
 		{
 			if ((ft_starts_with(cmd_name, "/"))
 				|| (ft_starts_with(cmd_name, "./"))
 				|| (ft_ends_with(cmd_name, "/")))
-				{
-					write(2, error_message, ft_strlen(error_message));
-					write(2, "\n", 1);
-					ft_exit(pipex, 127);
-				}
+				ft_exit(pipex, error_message, 0, 127);
 			else
-			{
-				write(2, "command not found\n", 18);
-				ft_exit(pipex, 127);
-			}
+				ft_exit(pipex, "command not found", 0, 127);
 		}
 	}
-	else if (errno == EACCES || errno == EISDIR) //No access || the path is a directory
-	{
-			write(2, error_message, ft_strlen(error_message)); // need to write in stderror
-			write(2, "\n", 1);
-			ft_exit(pipex, 126);
-	}
+	else if (errno == EACCES || errno == EISDIR)
+		ft_exit(pipex, error_message, 0, 126); // close pipes?
 	else
-	{
-		write(2, error_message, ft_strlen(error_message)); // need to write in stderror
-		write(2, "\n", 1);
-		ft_exit(pipex, 1);
-	}
+		ft_exit(pipex, error_message, 0, 1);
 }
-
-// void	ft_exit(t_pipex *pipex, const char *err_msg,
-// 				t_bool should_close_pipes, int exit_code)
-// {
-// 	if (err_msg != NULL)
-// 		ft_putendl_fd((char *)err_msg, 2);
-// 	if (should_close_pipes)
-// 		close_pipes(pipex->pipes);
-// 	cleanup(pipex);
-// 	exit(exit_code);
-// }

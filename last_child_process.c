@@ -18,25 +18,18 @@ void	last_child_process(t_pipex *pipex, int cmd_index)
 
 	out_fd = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644); // check 0644
 	if (out_fd < 0)
-	{
-		close_pipes(pipex);
 		print_outfile_error(pipex);
-		ft_exit(pipex, 1);
-	}
 	if (dup2(pipex->pipes[pipex->num_pipes - 1][0], STDIN_FILENO) < 0) //STDIN_FILENO is pointing the last pipes
 	{
-		write_and_clean_up(pipex);
-		exit(1);
-		//should I close pipes?
+		close(out_fd);
+		ft_exit(pipex, NULL, 0, 1);
 	}
-	close_pipes(pipex);
+	if (close_pipes(pipex) < 0)
+		ft_exit(pipex, "pipex: last_child_process(): close_pipes() fail", 0, 1); //should I close pipes?
 	if (dup2(out_fd, STDOUT_FILENO) < 0)
-	{
-		write_and_clean_up(pipex);
-		exit(1);
-		//should I close pipes?
-	}
-	close(out_fd);
-	call_execve(pipex->paths, pipex->commands[cmd_index]);
+		ft_exit(pipex, "pipex: last_child_process(): dup2() fail", 0, 1); //should I close pipes?
+	if (close(out_fd) == -1)
+		ft_exit(pipex, "pipex: first_child_process(): close_pipes() fail", 0, 1); //should I close pipes?
+	call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
 	print_execve_error(pipex, *pipex->commands[cmd_index]);
 }

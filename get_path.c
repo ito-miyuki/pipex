@@ -19,16 +19,20 @@ char	**get_path(char **envp)
 	char	**path;
 
 	i = 0;
-	while (envp && envp[i] != NULL) // pointer itself in not null and element is also not null
+	while (envp && envp[i] != NULL)
 	{
 		if (ft_strncmp("PATH", envp[i], 4) == 0)
 		{
 			temp = ft_split(envp[i], '='); //first, split like PATH and /Users/mito/.brew/bin:/usr/.....
-			// if (temp == NULL) // do I need this part?
-			// 	return (NULL);
+			if (temp == NULL) // do I need this part?
+				return (NULL);
 			path = ft_split(temp[1], ':'); // then split by ';'. "/Users/mito/.brew/bin" "/usr/local/bin" ...
-			//if(!path)
-			// do error handlimgs for failing malloc
+			if (path == NULL) // do I need this part?
+			{
+				//write_and_clean_up(pipex);
+				return (NULL);
+			}
+			free_grid(temp);
 			return (path);
 		}
 		i++;

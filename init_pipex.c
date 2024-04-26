@@ -23,7 +23,8 @@ static char	***init_commands(char **av_cmds, int num_cmds, t_pipex *pipex)
 		return (NULL);
 	while (i < num_cmds)
 	{
-		commands[i] = split_space_quote(av_cmds[i]);
+		//commands[i] = split_space_quote(av_cmds[i]);
+		commands[i] = ft_parse_cmd(av_cmds[i]);
 		if (commands[i] == NULL)
 		{
 			clean_up(pipex);

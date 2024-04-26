@@ -12,33 +12,37 @@
 
 #include "pipex_bonus.h"
 
+static void	run_process(t_pipex *pipex, int process_idx)
+{
+	if (process_idx == 0)
+		first_child_process(pipex, process_idx);
+	else if (process_idx == pipex->num_processes - 1)
+		last_child_process(pipex, process_idx);
+	else
+		middle_child_process(pipex, process_idx);
+}
+
 int	start_process(t_pipex *pipex)
 {
-	int pid;
+	int	pid;
 	int	i;
 
 	i = 0;
 	while (i < pipex->num_processes)
 	{
 		pid = fork();
-		// if (pid < 0) // means fork failed
-		// {
-		// 	close_pipes()
-		// 	wait_all_running_processes_to_finish()
-		// 	clean_u
-		// 	return (-1);
-		// }
-		if (pid == 0)
+		if (pid < 0)
 		{
-			if (i == 0) // for the first one, we need to open file
-				first_child_process(pipex, i); // this i links to num_commands
-			else if (i == pipex->num_processes - 1)
-				last_child_process(pipex, i); // for the last one, we need to write output to file
-			else
-				middle_child_process(pipex, i);
+			write_and_clean_up(pipex);
+			close_pipes(pipex);
+			wait_processes(pipex);
+			return (-1);
 		}
+		if (pid == 0)
+			run_process(pipex, i);
 		i++;
 	}
-	close_pipes(pipex);
+	if (close_pipes(pipex) < 0)
+		return (-1);
 	return (0);
 }
