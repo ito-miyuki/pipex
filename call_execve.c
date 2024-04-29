@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   call_execve.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:28:50 by mito              #+#    #+#             */
-/*   Updated: 2024/04/25 15:26:55 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/29 19:42:21 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ int	call_execve(char **envp, char **paths, char **command)
 		if (cmd_path == NULL)
 			return (-1);
 		if (access(cmd_path, X_OK) == 0)
+		{
 			status = execve(cmd_path, command, envp);
+		}
 		free(cmd_path);
 		if (status == -1)
 			return (-1);

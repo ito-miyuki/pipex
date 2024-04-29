@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:40:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/29 14:36:52 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/29 20:01:04 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,43 @@ static void	here_doc(t_pipex *pipex, int cmd_index)
 	print_execve_error(pipex, *pipex->commands[cmd_index]);
 }
 
+void	first_child_process(t_pipex *pipex, int cmd_index)
+{
+	int	in_fd;
+
+	if (pipex->here_doc == 1)
+		here_doc(pipex, cmd_index);
+	else
+	{
+		if (dup2(pipex->pipes[0][1], STDOUT_FILENO) < 0)
+			ft_exit(pipex, "pipex: first_child_process(): dup2() STDOUT_FILENO fail", 1, 1);
+		if (close_pipes(pipex) == -1)
+			ft_exit(pipex, "pipex: first_child_process(): close_pipes() fail", 0, 1);
+		in_fd = open(pipex->infile, O_RDONLY);
+		if (in_fd < 0)
+			print_infile_error(pipex);
+		if (dup2(in_fd, STDIN_FILENO) < 0)
+		{
+			close(in_fd);
+			ft_exit(pipex, "pipex: first_child_process(): dup2() STDIN_FILENO fail", 0, 1);
+		}
+		if (close(in_fd) < 0)
+			ft_exit(pipex, "pipex: first_child_process(): close(in_fd) fail", 1, 1);
+		//ft_putstr_fd("first child\n", 2); // delete it
+		call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
+		ft_putstr_fd("first child\n", 2); // delete it
+		print_execve_error(pipex, *pipex->commands[0]);
+	}
+}
+
+// write_end = dup(pipex->pipes[0][1]);
+// 		close_pipes(pipex);
+// 		in_fd = open(pipex->infile, O_RDONLY);
+// 		dup2(in_fd, STDIN_FILENO);
+// 		dup2(write_end, STDOUT_FILENO);
+// 		close(in_fd);
+
+
 // static void	here_doc(t_pipex *pipex, int cmd_index)
 // {
 // 	int		fd[2];
@@ -91,30 +128,3 @@ static void	here_doc(t_pipex *pipex, int cmd_index)
 // 	call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
 // 	print_execve_error(pipex, *pipex->commands[cmd_index]);
 // }
-
-void	first_child_process(t_pipex *pipex, int cmd_index)
-{
-	int	in_fd;
-
-	if (pipex->here_doc == 1)
-		here_doc(pipex, cmd_index);
-	else
-	{
-		in_fd = open(pipex->infile, O_RDONLY);
-		if (in_fd < 0)
-			print_infile_error(pipex);
-		if (dup2(in_fd, STDIN_FILENO) < 0)
-		{
-			close(in_fd);
-			ft_exit(pipex, "pipex: first_child_process(): dup2() STDIN_FILENO fail", 1, 1);
-		}
-		if (close(in_fd) < 0)
-			ft_exit(pipex, "pipex: first_child_process(): close(in_fd) fail", 0, 1);
-		if (dup2(pipex->pipes[0][1], STDOUT_FILENO) < 0)
-			ft_exit(pipex, "pipex: first_child_process(): dup2() STDOUT_FILENO fail", 1, 1);
-		if (close_pipes(pipex) == -1)
-			ft_exit(pipex, "pipex: first_child_process(): close_pipes() fail", 0, 1);
-		call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
-		print_execve_error(pipex, *pipex->commands[cmd_index]);
-	}
-}

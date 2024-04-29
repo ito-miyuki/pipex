@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/29 13:52:13 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/29 19:11:02 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <errno.h> // for strerror
 # include <string.h> // for strerror
 # include <stdbool.h> // for is_space
+#include <sys/wait.h> // for wait
 
 typedef struct s_pipex
 {
