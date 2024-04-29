@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/25 10:53:53 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/29 13:52:13 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h> // for pipe function
 # include <errno.h> // for strerror
 # include <string.h> // for strerror
+# include <stdbool.h> // for is_space
 
 typedef struct s_pipex
 {
@@ -66,5 +67,10 @@ void	ft_exit(t_pipex *pipex, const char *err_msg,
 			int should_close_pipes, int exit_code);
 
 char	**ft_parse_cmd(const char *cmd);
+
+void	ft_trim(char *str, int c);
+bool	ft_has_spaces_only(const char *str);
+int		ft_isspace(int c);
+char	*find_quote(char *str);
 
 #endif

@@ -65,7 +65,7 @@ static int	try_read(const char *pathname)
 	fd = open(pathname, O_RDONLY);
 	if (fd < 0)
 		return (-1);
-	if (read(fd, &buf, 1) < 0) // if it can read, then it is a file
+	if (read(fd, &buf, 1) < 0)
 	{
 		close(fd);
 		return (-1);
@@ -79,7 +79,7 @@ static int	handle_pathname(char **envp, char **command)
 {
 	if (command[0][0] == '\0')
 		return (execve(command[0], command, envp));
-	if (ft_starts_with(command[0], "/") || ft_starts_with(command[0], "./"))
+	if (ft_strchr(command[0], '/') != NULL)
 	{
 		if (try_read(command[0]) < 0 && errno == EISDIR)
 			return (-1);
@@ -108,5 +108,7 @@ int	call_execve(char **envp, char **paths, char **command)
 			return (-1);
 		paths++;
 	}
-	return (execve(command[0], command, envp));
+	errno = ENOENT;
+	//return (execve(command[0], command, envp));
+	return (-1);
 }
