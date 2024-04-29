@@ -18,9 +18,10 @@ BONUS	=	main_bonus.c \
 			middle_child_process.c \
 			close_pipes.c \
 			wait_processes.c \
-			split_space_quote.c \
 			print_execve_error.c \
-			ft_exit.c
+			ft_exit.c \
+			ft_isspace.c \
+			ft_parse_cmd.c
 
 #OBJS	= $(SRCS:.c=.o)
 
