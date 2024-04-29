@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   middle_child_process.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:21:03 by mito              #+#    #+#             */
-/*   Updated: 2024/04/25 10:23:18 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/29 14:20:27 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	middle_child_process(t_pipex *pipex, int cmd_index)
 			"pipex: middle_child_process(): dup2() STDIN_FILENO fail", 1, 1);
 	if (close_pipes(pipex) < 0)
 		ft_exit(pipex,
-			"pipex: middle_child_process(): close_pipes() fail", 1, 1);
+			"pipex: middle_child_process(): close_pipes() fail", 0, 1);
 	call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
 	print_execve_error(pipex, *pipex->commands[cmd_index]);
 }

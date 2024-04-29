@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_child_process.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:40:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/25 14:46:39 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/29 14:36:52 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,24 @@ static void	here_doc(t_pipex *pipex, int cmd_index)
 	int		fd[2];
 
 	if (pipe(fd) == -1)
-		ft_exit(pipex, "pipex: here_doc() fail", 0, 1); //pipes?
+		ft_exit(pipex, "pipex: here_doc() fail", 1, 1);
 	read_user_input(pipex, fd[1]);
+	if (close(fd[1]) < 0)
+	{
+		close(fd[0]);
+		ft_exit(pipex, "pipex: here_doc(): close(fd[1]) fail", 0, 1);
+	}
 	if (dup2(pipex->pipes[0][1], STDOUT_FILENO) < 0)
 	{
-		close(fd[1]);
-		ft_exit(pipex, "pipex: here_doc(): dup2 stdout fail", 1, 1); // close pipes?
+		close(fd[0]);
+		ft_exit(pipex, "pipex: here_doc(): dup2 stdout fail", 1, 1);
 	}
 	if (close_pipes(pipex) == -1)
-		ft_exit(pipex, "pipex: here_doc(): close_pipes() fail", 0, 1); //should I close pipes?
-	close(fd[1]);
+		ft_exit(pipex, "pipex: here_doc(): close_pipes() fail", 0, 1);
 	if (dup2(fd[0], STDIN_FILENO) < 0)
-		ft_exit(pipex, "pipex: here_doc(): dup2 stdin fail", 1, 1); // close pipes?
+		ft_exit(pipex, "pipex: here_doc(): dup2 stdin fail", 0, 1);
+	if (close(fd[0]) < 0)
+		ft_exit(pipex, "pipex: here_doc(): close(fd[0]) fail", 0, 1);
 	call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
 	print_execve_error(pipex, *pipex->commands[cmd_index]);
 }
@@ -96,18 +102,18 @@ void	first_child_process(t_pipex *pipex, int cmd_index)
 	{
 		in_fd = open(pipex->infile, O_RDONLY);
 		if (in_fd < 0)
-			print_infile_error(pipex); // no need to close pipes
+			print_infile_error(pipex);
 		if (dup2(in_fd, STDIN_FILENO) < 0)
 		{
-			close(in_fd); // should I do close fail check?
-			ft_exit(pipex, "pipex: first_child_process(): dup2() STDIN_FILENO fail", 0, 1); //should I close pipes? what is the exit code?
+			close(in_fd);
+			ft_exit(pipex, "pipex: first_child_process(): dup2() STDIN_FILENO fail", 1, 1);
 		}
 		if (close(in_fd) < 0)
 			ft_exit(pipex, "pipex: first_child_process(): close(in_fd) fail", 0, 1);
 		if (dup2(pipex->pipes[0][1], STDOUT_FILENO) < 0)
-			ft_exit(pipex, "pipex: first_child_process(): dup2() STDOUT_FILENO fail", 0, 1); //should I close pipes?
+			ft_exit(pipex, "pipex: first_child_process(): dup2() STDOUT_FILENO fail", 1, 1);
 		if (close_pipes(pipex) == -1)
-			ft_exit(pipex, "pipex: first_child_process(): close_pipes() fail", 0, 1); //should I close pipes?
+			ft_exit(pipex, "pipex: first_child_process(): close_pipes() fail", 0, 1);
 		call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
 		print_execve_error(pipex, *pipex->commands[cmd_index]);
 	}

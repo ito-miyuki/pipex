@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_execve_error.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 16:23:14 by mito              #+#    #+#             */
-/*   Updated: 2024/04/25 15:18:29 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/29 14:24:25 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	print_infile_error(t_pipex *pipex)
 	write(2, ": ", 2);
 	write(2, error_message, ft_strlen(error_message));
 	write(2, "\n", 1);
-	ft_exit(pipex, NULL, 0, 1);
+	ft_exit(pipex, NULL, 1, 1); // close pipes
 }
 
 void	print_execve_error(t_pipex *pipex, char *cmd_name)
