@@ -6,11 +6,11 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 16:23:14 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 14:41:25 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 17:36:35 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 void	print_outfile_error(t_pipex *pipex)
 {

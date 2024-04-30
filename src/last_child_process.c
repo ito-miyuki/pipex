@@ -6,11 +6,11 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:40:33 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 14:32:10 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 17:36:25 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 void	last_child_process(t_pipex *pipex, int cmd_index)
 {

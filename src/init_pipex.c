@@ -6,11 +6,11 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:30:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 16:33:06 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 17:35:45 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 static char	***init_commands(char **av_cmds, int num_cmds, t_pipex *pipex)
 {

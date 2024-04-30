@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 10:19:15 by mito              #+#    #+#             */
-/*   Updated: 2024/04/25 11:42:10 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 17:36:09 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 void	ft_exit(t_pipex *pipex, const char *err_msg,
 			int should_close_pipes, int exit_code)

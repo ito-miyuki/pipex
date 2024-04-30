@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   close_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 10:58:02 by mito              #+#    #+#             */
-/*   Updated: 2024/04/15 18:56:31 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 17:36:02 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 int	close_pipes(t_pipex *pipex)
 {
