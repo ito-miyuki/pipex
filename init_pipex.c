@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:30:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/25 15:17:03 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 11:43:09 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ static char	***init_commands(char **av_cmds, int num_cmds, t_pipex *pipex)
 		i++;
 	}
 	return (commands);
+}
+
+static int	init_pids(t_pipex *pipex)
+{
+	pipex->
 }
 
 int	init_pipex(t_pipex *pipex, int argc, char **argv, char **paths)

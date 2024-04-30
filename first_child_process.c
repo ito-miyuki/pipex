@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:40:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/29 20:01:04 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 10:22:48 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	first_child_process(t_pipex *pipex, int cmd_index)
 			ft_exit(pipex, "pipex: first_child_process(): close(in_fd) fail", 1, 1);
 		//ft_putstr_fd("first child\n", 2); // delete it
 		call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
-		ft_putstr_fd("first child\n", 2); // delete it
+		//ft_putstr_fd("first child\n", 2); // delete it
 		print_execve_error(pipex, *pipex->commands[0]);
 	}
 }

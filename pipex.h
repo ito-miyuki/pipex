@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 11:40:50 by mito             ###   ########.fr       */
+/*   Created: 2024/04/30 11:02:19 by mito              #+#    #+#             */
+/*   Updated: 2024/04/30 11:41:43 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 # include "libft/libft.h"
 # include <fcntl.h> // for open
@@ -32,7 +32,7 @@ typedef struct s_pipex
 	int		num_cmds;
 	int		num_processes;
 	int		num_pipes;
-	int		status; // to store execve's return value
+	int		status;
 	char	**envp;
 	char	**paths;
 	int		here_doc;
@@ -49,7 +49,7 @@ void	write_and_clean_up(t_pipex *pipex);
 int		start_process(t_pipex *pipex);
 void	first_child_process(t_pipex *pipex, int cmd_index);
 void	last_child_process(t_pipex *pipex, int cmd_index);
-void	middle_child_process(t_pipex *pipex, int cmd_index);
+void	middle_child_process(t_pipex *pipex, int cmd_index); // should I remove it?
 
 char	*ft_join_strings(int num_of_strings, ...);
 int		call_execve(char **envp, char **paths, char **command);
