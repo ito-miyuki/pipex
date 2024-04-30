@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:40:18 by mito              #+#    #+#             */
-/*   Updated: 2024/04/29 13:53:11 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 14:30:49 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,21 +124,3 @@ char	**ft_parse_cmd(const char *cmd)
 		return (NULL);
 	return (tokens);
 }
-
-// int main(void)
-// {
-// 	//const char str[] = "awk '{count++} END {print count}' 'abx asd casd'    ";
-// 	//char str[] = "awk "{count++} END {print count}""; //これは出来ない
-// 	//char str[] = "";
-// 	// const char str[] = 'sed "s/And/But/"' 'awk '"'"'{count++} END {print count}'"'"'';
-// 	// const char str[] = "'sed \"s/And/But/"'";
-// 	const char *abc = "'sed \"s/And/But/\"' 'awk \"{count++} END {printf \"count: %i\\\" , count}\"' outfile.txt";
-// 	char **cmd = ft_parse_cmd(abc);
-
-// 	int i = 0;
-// 	while (cmd && cmd[i] != NULL)
-// 	{
-// 		printf("%s\n", cmd[i]);
-// 		i++;
-// 	}
-// }

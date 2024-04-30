@@ -42,15 +42,13 @@ BONUS	=	main_bonus.c \
 
 OBJS	= $(SRCS:%.c=$(BUILD_DIR)/%.o)
 
-BONUS_OBJS	= $(BUNOS:%.c=$(BUILD_DIR)/%.o)
+BONUS_OBJS	= $(BONUS:%.c=$(BUILD_DIR)/%.o)
 
 CC	= cc
 
 #remove -g flag before submitting
 #remove -fsanitize=address flag before submitting
-CFLAGS = -g -Wall -Wextra -Werror -I/libft
-
-RM	= rm -rf
+CFLAGS = -g -Wall -Wextra -Werror -I$(LIBFT_DIR)
 
 all:	$(NAME)
 
@@ -58,7 +56,7 @@ $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
-	$(MAKE) -C ./libft
+	$(MAKE) -C $(LIBFT_DIR)
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(BUILD_DIR)
@@ -67,14 +65,19 @@ $(BUILD_DIR)/%.o: %.c
 #%.o: %.c
 #	$(CC) $(CFLAGS) -c $< -o $@
 
-bonus:	$(LIBFT) $(BONUS_OBJS)
+bonus: .bonus
+
+.bonus:	$(LIBFT) $(BONUS_OBJS)
 	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME)
 
 clean:
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	$(MAKE) -C $(LIBFT_DIR) clean
+	rm -rf $(BUILD_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	rm -f $(NAME)
+	rm -f *.o
 
 re: fclean all
 

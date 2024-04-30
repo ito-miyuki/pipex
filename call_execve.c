@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 16:28:50 by mito              #+#    #+#             */
-/*   Updated: 2024/04/29 19:42:21 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 14:21:39 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,5 @@ int	call_execve(char **envp, char **paths, char **command)
 		paths++;
 	}
 	errno = ENOENT;
-	//return (execve(command[0], command, envp));
 	return (-1);
 }

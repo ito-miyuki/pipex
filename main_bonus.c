@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:57:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 10:24:14 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 14:24:02 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ int	main(int argc, char **argv, char **envp)
 		return (write_and_clean_up(&pipex), 1);
 	wait_processes(&pipex);
 	status = pipex.status;
-	// write(2, "status code = ", 14);
-	// ft_putnbr_fd(status, 2);
-	// write(2, "\n", 1);
 	clean_up(&pipex);
 	return (status);
 }

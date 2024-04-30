@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:02:19 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 11:41:43 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 14:44:48 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define PIPEX_H
 
 # include "libft/libft.h"
-# include <fcntl.h> // for open
+# include <fcntl.h>
 # include <stdio.h> // for printf/testing. delete it if you don't need it!
-# include <unistd.h> // for pipe function
-# include <errno.h> // for strerror
-# include <string.h> // for strerror
-# include <stdbool.h> // for is_space
-#include <sys/wait.h> // for wait
+# include <unistd.h>
+# include <errno.h>
+# include <string.h>
+# include <stdbool.h>
+# include <sys/wait.h>
 
 typedef struct s_pipex
 {

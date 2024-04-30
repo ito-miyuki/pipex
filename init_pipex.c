@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:30:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 11:43:09 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 16:33:06 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static char	***init_commands(char **av_cmds, int num_cmds, t_pipex *pipex)
 		return (NULL);
 	while (i < num_cmds)
 	{
-		//commands[i] = split_space_quote(av_cmds[i]);
 		commands[i] = ft_parse_cmd(av_cmds[i]);
 		if (commands[i] == NULL)
 		{
@@ -35,9 +34,13 @@ static char	***init_commands(char **av_cmds, int num_cmds, t_pipex *pipex)
 	return (commands);
 }
 
-static int	init_pids(t_pipex *pipex)
+static int	init_pids(t_pipex *pipex, int num_processes)
 {
-	pipex->
+	pipex->pids = (pid_t *)malloc(num_processes * sizeof(pid_t));
+	if (pipex->pids == NULL)
+		return (-1);
+	pipex->num_processes = num_processes;
+	return (0);
 }
 
 int	init_pipex(t_pipex *pipex, int argc, char **argv, char **paths)
@@ -53,7 +56,8 @@ int	init_pipex(t_pipex *pipex, int argc, char **argv, char **paths)
 	}
 	pipex->paths = paths;
 	pipex->num_cmds = argc - 2;
-	pipex->num_processes = argc - 2;
+	if (init_pids(pipex, argc - 2) < 0)
+		return (-1);
 	pipex->num_pipes = (pipex->num_processes - 1);
 	pipex->commands = init_commands(argv + pipex->here_doc + 1,
 			pipex->num_cmds, pipex);

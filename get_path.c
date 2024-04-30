@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 16:54:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/23 14:13:39 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 14:23:14 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ char	**get_path(char **envp)
 	{
 		if (ft_strncmp("PATH", envp[i], 4) == 0)
 		{
-			temp = ft_split(envp[i], '='); //first, split like PATH and /Users/mito/.brew/bin:/usr/.....
-			if (temp == NULL) // do I need this part?
+			temp = ft_split(envp[i], '=');
+			if (temp == NULL)
 				return (NULL);
-			path = ft_split(temp[1], ':'); // then split by ';'. "/Users/mito/.brew/bin" "/usr/local/bin" ...
-			if (path == NULL) // do I need this part?
+			path = ft_split(temp[1], ':');
+			if (path == NULL)
 			{
 				//write_and_clean_up(pipex);
 				return (NULL);

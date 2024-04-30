@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:03 by mito              #+#    #+#             */
-/*   Updated: 2024/04/24 10:06:47 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 16:30:55 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	write_and_clean_up(t_pipex *pipex)
 
 void	clean_up(t_pipex *pipex)
 {
+	free(pipex->pids);
 	if (pipex->commands)
 		delete_commands(pipex);
 	if (pipex->paths)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mito <mito@student.hive.fi>                +#+  +:+       +#+        */
+/*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:03:14 by mito              #+#    #+#             */
-/*   Updated: 2024/04/23 16:46:58 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 16:27:30 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,20 @@ static void	run_process(t_pipex *pipex, int process_idx)
 
 int	start_process(t_pipex *pipex)
 {
-	int	pid;
 	int	i;
 
 	i = 0;
 	while (i < pipex->num_processes)
 	{
-		pid = fork();
-		if (pid < 0)
+		pipex->pids[i] = fork();
+		if (pipex->pids[i] < 0)
 		{
 			write_and_clean_up(pipex);
 			close_pipes(pipex);
 			wait_processes(pipex);
 			return (-1);
 		}
-		if (pid == 0)
+		if (pipex->pids[i] == 0)
 			run_process(pipex, i);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:40:36 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 10:22:48 by mito             ###   ########.fr       */
+/*   Updated: 2024/04/30 14:27:53 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,64 +67,20 @@ void	first_child_process(t_pipex *pipex, int cmd_index)
 	else
 	{
 		if (dup2(pipex->pipes[0][1], STDOUT_FILENO) < 0)
-			ft_exit(pipex, "pipex: first_child_process(): dup2() STDOUT_FILENO fail", 1, 1);
+			ft_exit(pipex, "first_child_process(): dup2() STDOUT fail", 1, 1);
 		if (close_pipes(pipex) == -1)
-			ft_exit(pipex, "pipex: first_child_process(): close_pipes() fail", 0, 1);
+			ft_exit(pipex, "first_child_process(): close_pipes() fail", 0, 1);
 		in_fd = open(pipex->infile, O_RDONLY);
 		if (in_fd < 0)
 			print_infile_error(pipex);
 		if (dup2(in_fd, STDIN_FILENO) < 0)
 		{
 			close(in_fd);
-			ft_exit(pipex, "pipex: first_child_process(): dup2() STDIN_FILENO fail", 0, 1);
+			ft_exit(pipex, "first_child_process(): dup2() STDIN fail", 0, 1);
 		}
 		if (close(in_fd) < 0)
-			ft_exit(pipex, "pipex: first_child_process(): close(in_fd) fail", 1, 1);
-		//ft_putstr_fd("first child\n", 2); // delete it
+			ft_exit(pipex, "first_child_process(): close(in_fd) fail", 1, 1);
 		call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
-		//ft_putstr_fd("first child\n", 2); // delete it
 		print_execve_error(pipex, *pipex->commands[0]);
 	}
 }
-
-// write_end = dup(pipex->pipes[0][1]);
-// 		close_pipes(pipex);
-// 		in_fd = open(pipex->infile, O_RDONLY);
-// 		dup2(in_fd, STDIN_FILENO);
-// 		dup2(write_end, STDOUT_FILENO);
-// 		close(in_fd);
-
-
-// static void	here_doc(t_pipex *pipex, int cmd_index)
-// {
-// 	int		fd[2];
-// 	char	buf[1024];
-// 	ssize_t	bytes_read;
-
-// 	if (pipe(fd) == -1)
-// 		ft_exit(pipex, "pipex: here_doc() fail", 0, 1); //pipes?
-// 	while (1)
-// 	{
-// 		ft_putstr_fd("pipe heredoc> ", 1);
-// 		bytes_read = read(STDIN_FILENO, buf, 1023);
-// 		buf[bytes_read] = '\0';
-// 		if (bytes_read < 0)
-// 			ft_exit(pipex, "pipex: here_doc(): read fail", 1, 1);
-// 		if ((size_t)bytes_read - 1 == ft_strlen(pipex->limiter)
-// 			&& ft_strncmp(buf, pipex->limiter, (size_t)bytes_read - 1) == 0)
-// 			break ;
-// 		write(fd[1], buf, bytes_read);
-// 	}
-// 	if (dup2(pipex->pipes[0][1], STDOUT_FILENO) < 0)
-// 	{
-// 		close(fd[1]);
-// 		ft_exit(pipex, "pipex: here_doc(): dup2 stdout fail", 1, 1); // close pipes?
-// 	}
-// 	if (close_pipes(pipex) == -1)
-// 		ft_exit(pipex, "pipex: here_doc(): close_pipes() fail", 0, 1); //should I close pipes?
-// 	close(fd[1]);
-// 	if (dup2(fd[0], STDIN_FILENO) < 0)
-// 		ft_exit(pipex, "pipex: here_doc(): dup2 stdin fail", 1, 1); // close pipes?
-// 	call_execve(pipex->envp, pipex->paths, pipex->commands[cmd_index]);
-// 	print_execve_error(pipex, *pipex->commands[cmd_index]);
-// }
