@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:56:27 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 17:17:52 by mito             ###   ########.fr       */
+/*   Updated: 2024/05/02 18:38:51 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include "../libft/libft.h"
 # include <fcntl.h>
-# include <stdio.h> // for printf/testing. delete it if you don't need it!
 # include <unistd.h>
 # include <errno.h>
 # include <string.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <stdio.h>
 
 typedef struct s_pipex
 {

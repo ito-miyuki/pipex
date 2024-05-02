@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:57:38 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 14:24:02 by mito             ###   ########.fr       */
+/*   Updated: 2024/05/02 19:34:51 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,20 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_putendl_fd("Invalid number of arguments.", 2), 1);
 	pipex.envp = envp;
 	if (init_pipex(&pipex, argc - 1, argv + 1, get_path(envp)) < 0)
-		return (write_and_clean_up(&pipex), 1);
+	{
+		write_and_clean_up(&pipex);
+		return (EXIT_FAILURE);
+	}
 	if (create_pipes(&pipex) < 0)
-		return (write_and_clean_up(&pipex), 1);
+	{
+		write_and_clean_up(&pipex);
+		return (EXIT_FAILURE);
+	}
 	if (start_process(&pipex) < 0)
-		return (write_and_clean_up(&pipex), 1);
+	{
+		write_and_clean_up(&pipex);
+		return (EXIT_FAILURE);
+	}
 	wait_processes(&pipex);
 	status = pipex.status;
 	clean_up(&pipex);

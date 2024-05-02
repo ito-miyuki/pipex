@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:03:14 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 17:36:38 by mito             ###   ########.fr       */
+/*   Updated: 2024/05/02 19:22:18 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	start_process(t_pipex *pipex)
 		pipex->pids[i] = fork();
 		if (pipex->pids[i] < 0)
 		{
-			write_and_clean_up(pipex);
+			perror("fork() fail\n");
 			close_pipes(pipex);
 			wait_processes(pipex);
 			return (-1);

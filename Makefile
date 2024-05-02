@@ -60,7 +60,7 @@ all:	$(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
-	@echo "$(YELLOW)$(NAME) created mandatory ✅ ${END}"
+	@echo "$(YELLOW)$(NAME) created mandatory ✅ $(END)"
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)

@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 10:34:03 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 17:36:00 by mito             ###   ########.fr       */
+/*   Updated: 2024/05/02 17:38:17 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_grid(char **grid)
 	size_t	i;
 
 	i = 0;
-	if (grid == NULL || *grid == NULL) // Do I need *grid == NULL condition too?
+	if (grid == NULL)
 		return ;
 	while (grid[i] != NULL)
 	{

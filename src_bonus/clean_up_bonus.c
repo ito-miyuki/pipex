@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 17:20:26 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 17:20:30 by mito             ###   ########.fr       */
+/*   Updated: 2024/05/02 19:10:33 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_grid(char **grid)
 	size_t	i;
 
 	i = 0;
-	if (grid == NULL || *grid == NULL) // Do I need *grid == NULL condition too?
+	if (grid == NULL || *grid == NULL)
 		return ;
 	while (grid[i] != NULL)
 	{
@@ -58,7 +58,7 @@ static void	delete_commands(t_pipex *pipex)
 
 void	write_and_clean_up(t_pipex *pipex)
 {
-	write(2, "Error", 5);
+	write(2, "Error\n", 6);
 	clean_up(pipex);
 }
 
