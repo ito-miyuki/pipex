@@ -53,10 +53,14 @@ CC	= cc
 #remove -fsanitize=address flag before submitting
 CFLAGS = -g -Wall -Wextra -Werror -I$(LIBFT_DIR)
 
+YELLOW = \033[0;33m
+END = \033[0m
+
 all:	$(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@echo "$(YELLOW)$(NAME) created mandatory ✅ ${END}"
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
@@ -71,13 +75,15 @@ $(BONUS_BUILD_DIR)/%.o: $(BONUS_SRCS_DIR)/%.c
 
 bonus: .bonus
 
-.bonus:	$(LIBFT) $(BONUS_OBJS)
+.bonus: $(LIBFT) $(BONUS_OBJS)
+	touch .bonus
 	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(NAME)
+	@echo "$(YELLOW)$(NAME) created bonus ✅ $(END)"
 
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -rf $(BUILD_DIR)
-	rm -rf $(BONUS_BUILD_DIR)
+	rm -rf $(BUILD_DIR) $(BONUS_BUILD_DIR)
+	rm -f .bonus
 
 fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
