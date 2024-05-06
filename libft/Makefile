@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mito <mito@student.hive.fi>                +#+  +:+       +#+         #
+#    By: mito <mito@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 15:21:54 by mito              #+#    #+#              #
-#    Updated: 2024/03/22 10:33:35 by mito             ###   ########.fr        #
+#    Updated: 2024/05/03 11:29:13 by mito             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJS	= $(SRCS:.c=.o)
 
 CC	= cc
 
-CFLAGS	= -g -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror
 
 AR	= ar rcs
 

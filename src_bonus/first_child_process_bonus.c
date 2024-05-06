@@ -6,7 +6,7 @@
 /*   By: mito <mito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 17:21:15 by mito              #+#    #+#             */
-/*   Updated: 2024/04/30 17:21:17 by mito             ###   ########.fr       */
+/*   Updated: 2024/05/03 12:29:30 by mito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	here_doc(t_pipex *pipex, int cmd_index)
 		close(fd[0]);
 		ft_exit(pipex, "pipex: here_doc(): dup2 stdout fail", 1, 1);
 	}
-	if (close_pipes(pipex) == -1)
+	if (close_pipes(pipex) < 0)
 		ft_exit(pipex, "pipex: here_doc(): close_pipes() fail", 0, 1);
 	if (dup2(fd[0], STDIN_FILENO) < 0)
 		ft_exit(pipex, "pipex: here_doc(): dup2 stdin fail", 0, 1);

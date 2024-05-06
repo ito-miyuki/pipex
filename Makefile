@@ -49,9 +49,7 @@ BONUS_OBJS	= $(BONUS_SRCS:%.c=$(BONUS_BUILD_DIR)/%.o)
 
 CC	= cc
 
-#remove -g flag before submitting
-#remove -fsanitize=address flag before submitting
-CFLAGS = -g -Wall -Wextra -Werror -I$(LIBFT_DIR)
+CFLAGS = -Wall -Wextra -Werror -I$(LIBFT_DIR)
 
 YELLOW = \033[0;33m
 END = \033[0m
